@@ -1,0 +1,50 @@
+pool:
+  vmImage: 'vs2017-win2016'
+  demands: msbuild
+
+variables:
+  Solution: 'PCF/Solution'
+  Controls: 'PCF/Controls'
+  BuildConfiguration: 'Release'
+
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - PCF/*
+
+steps:
+- task: NodeTool@0
+  displayName: 'Use Node 10.x'
+  inputs:
+    versionSpec: 10.x
+
+- powershell: |
+   # Install pnpm
+   npm install -g pnpm
+   
+   # Install dependencies
+   pnpm recursive install
+   
+  workingDirectory: $(Controls)
+  displayName: 'Install pnpm and restore all node modules'
+
+- task: MSBuild@1
+  displayName: 'Build antares pcf soution'
+  inputs:
+    solution: $(Solution)/*.cdsproj
+    msbuildArguments: '/t:build /restore /p:configuration=$(BuildConfiguration)'
+
+- task: CopyFiles@2
+  displayName: 'Copy PCF solution to ArtifactStagingDirectory'
+  inputs:
+    SourceFolder: $(Solution)/bin/Release/
+    Contents: '*.zip'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: Solution'
+  inputs:
+    ArtifactName: Solution
