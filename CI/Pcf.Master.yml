@@ -32,7 +32,7 @@ steps:
   displayName: 'Install pnpm and restore all node modules'
 
 - task: MSBuild@1
-  displayName: 'Build antares pcf soution'
+  displayName: 'Build pcf soution'
   inputs:
     solution: $(Solution)/*.cdsproj
     msbuildArguments: '/t:build /restore /p:configuration=$(BuildConfiguration)'
