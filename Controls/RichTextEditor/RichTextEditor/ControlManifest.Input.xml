@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="XSystems.Pcf" constructor="RichTextEditor" version="0.0.6" 
+  display-name-key="Rich Text Editor" description-key="Multiline rich text editor with html styling" 
+  control-type="standard" preview-image="img/preview.png">
+    <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
+    <property name="_html" display-name-key="RichText" description-key="The field contains html text." of-type="Multiple" usage="bound" required="true" />
+    <resources>
+      <code path="index.ts" order="1"/>
+      <css path="css/richtexteditor.css" order="1" />
+      <css path="../node_modules/suneditor/src/assets/css/suneditor-contents.css" order="1" />
+    </resources>
+  </control>
+</manifest>
