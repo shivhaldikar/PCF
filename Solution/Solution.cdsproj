@@ -40,6 +40,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\Controls\RichTextEditor\RichTextEditor.pcfproj" />
+    <ProjectReference Include="..\Controls\Money\Money.pcfproj" />
   </ItemGroup>
 
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
